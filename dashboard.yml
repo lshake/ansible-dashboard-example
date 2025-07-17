@@ -1,5 +1,5 @@
 ---
-- name: Check the firewalld status on hosts
+- name: Check the service status on hosts
   hosts: all
   gather_facts: true
   become: true
