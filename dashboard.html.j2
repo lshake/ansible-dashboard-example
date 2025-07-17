@@ -44,6 +44,7 @@
 {% if hostvars[host]['ansible_facts']['services'][service_name]['state'] is defined %}
 <h2><a name="{{ host }}">{{ host }}</a></h2>
 <pre>
+{{ hostvars[host]['tailscale_status']['stderr'] }}
 {{ hostvars[host]['tailscale_status']['stdout'] }}
 </pre>
 {% endif %}
