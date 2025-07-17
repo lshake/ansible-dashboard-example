@@ -16,14 +16,12 @@
     - name: Debug all services
       ansible.builtin.debug:
         var: ansible_facts.services
-      tags:
-        - never
+        verbosity: 2
 
     - name: Debug the service status
       ansible.builtin.debug:
         msg: "{{ ansible_facts.services[service_name]['state'] | default(service_name ~ ' is not installed') }}"
-      tags:
-        - never
+        verbosity: 2
 
     # Capture more information about the running application
     - name: Check if tailscale is connected
@@ -37,8 +35,7 @@
     - name: Debug the application status
       ansible.builtin.debug:
         var: tailscale_status
-      tags:
-        - never
+        verbosity: 2
 
 - name: Generate the dashboard
   hosts: localhost
@@ -53,8 +50,7 @@
     - name: Debug the whole hostvars dictionary
       ansible.builtin.debug:
         var: hostvars
-      tags:
-        - never
+        verbosity: 2
 
     - name: Template the dashboard
       ansible.builtin.template:
