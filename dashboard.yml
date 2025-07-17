@@ -1,0 +1,63 @@
+---
+- name: Check the firewalld status on hosts
+  hosts: all
+  gather_facts: true
+  become: true
+
+  vars:
+    service_name: tailscaled.service
+
+  tasks:
+    # Note : We don't gather service facts by default
+    - name: Get the status of all services
+      ansible.builtin.service_facts:
+      when: ansible_facts.services is not defined
+
+    - name: Debug all services
+      ansible.builtin.debug:
+        var: ansible_facts.services
+      tags:
+        - never
+
+    - name: Debug the service status
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.services[service_name]['state'] | default(service_name ~ ' is not installed') }}"
+      tags:
+        - never
+
+    # Capture more information about the running application
+    - name: Check if tailscale is connected
+      ansible.builtin.command: tailscale status
+      changed_when: false
+      register: tailscale_status
+      ignore_errors: true
+      when:
+        - ansible_facts.services[service_name] is defined
+
+    - name: Debug the application status
+      ansible.builtin.debug:
+        var: tailscale_status
+      tags:
+        - never
+
+- name: Generate the dashboard
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    dashboard_file: dashboard.html
+    service_name: tailscaled.service
+
+  tasks:
+    - name: Debug the whole hostvars dictionary
+      ansible.builtin.debug:
+        var: hostvars
+      tags:
+        - never
+
+    - name: Template the dashboard
+      ansible.builtin.template:
+        src: dashboard.html.j2
+        dest: "{{ dashboard_file }}"
+        mode: "0644"

@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Services Dashboard</title>
+<style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+    }
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+</style>
+</head>
+<body>
+
+<h1>Service state for {{ service_name }}</h1>
+
+<table>
+<tr>
+<th>host</th>
+<th>state</th>
+</tr
+
+{# Get the inventory hostname for all hosts #}
+{% for host in (groups['all'] | sort) %}
+{# Dispay the host and it's service status #}
+{# Use the bracketed notation rather than dotted, so we can use variables in the dictionary path #}
+<tr>
+    <td>{{ host }}</td>
+    <td>
+{% if hostvars[host]['ansible_facts']['services'][service_name]['state'] is defined %}
+         <a href="#{{host}}">{{ hostvars[host]['ansible_facts']['services'][service_name]['state'] }}</a>
+{% else %}
+        not installed
+    </td>
+{% endif %}
+<tr>
+{% endfor %}
+</table>
+<hr>
+
+{% for host in (groups['all'] | sort) %}
+{% if hostvars[host]['ansible_facts']['services'][service_name]['state'] is defined %}
+<h2><a name="{{ host }}">{{ host }}</a></h2>
+<pre>
+{{ hostvars[host]['tailscale_status']['stdout'] }}
+</pre>
+{% endif %}
+{% endfor %}
+
+</body>
+</html>

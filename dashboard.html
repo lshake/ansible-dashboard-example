@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Services Dashboard</title>
+<style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+    }
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+</style>
+</head>
+<body>
+<h1>Service state for tailscaled.service</h1>
+<table>
+<tr>
+<th>host</th>
+<th>state</th>
+</tr
+<tr>
+    <td>app01.test.rham.net</td>
+    <td>
+        not installed
+    </td>
+<tr>
+<tr>
+    <td>app02.test.rham.net</td>
+    <td>
+        not installed
+    </td>
+<tr>
+<tr>
+    <td>awsbh.test.rham.net</td>
+    <td>
+         <a href="#awsbh.test.rham.net">running</a>
+<tr>
+</table>
+<hr>
+
+<h2><a name="awsbh.test.rham.net">awsbh.test.rham.net</a></h2>
+<pre>
+100.94.4.64     awsbh-test-rham-net  awsbh-test-rham-net.tail1d22e.ts.net linux   -
+100.84.83.121   aap25sn-dev01        tagged-devices linux   offline
+100.103.237.4   aap25sn-prod01       tagged-devices linux   offline
+100.85.76.21    bh02                 lee.shakespeare@ linux   idle; offers exit node
+100.95.244.127  hannahiphone         lee.shakespeare@ iOS     offline
+100.72.4.32     ipad165              lee.shakespeare@ iOS     -
+100.98.16.139   leesiphone           lee.shakespeare@ iOS     -
+100.111.35.49   lshakesp-mac         lee.shakespeare@ macOS   active; relay "lhr", tx 3980424 rx 26120328
+100.93.9.29     lshakesp-mac2        lee.shakespeare@ macOS   offline
+100.65.25.15    rh9ws2-4             tagged-devices linux   idle; offers exit node; offline
+100.121.8.96    rpi2                 lee.shakespeare@ linux   idle; offers exit node
+100.126.137.122 smtp-prod01          lee.shakespeare@ linux   offline
+
+# Health check:
+#     - Some peers are advertising routes but --accept-routes is false
+</pre>
+
+</body>
+</html>
